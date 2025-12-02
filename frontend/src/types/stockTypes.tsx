@@ -10,7 +10,7 @@ export interface StockData {
     latest_trading_day: string;
 }
 
-export interface DailyCandel {
+export interface DailyCandle {
     date: string;
     open: number;
     high: number;
