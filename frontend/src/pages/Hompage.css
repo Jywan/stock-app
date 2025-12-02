@@ -1,58 +1,65 @@
-/* 전체 페이지 다크모드 배경 */
+/* 전체 페이지 (다크 배경) */
 .page-root {
     min-height: 100vh;
     padding: 24px;
-    background-color: #111827; /* 아주 어두운 블루/블랙 */
-    color: #f9fafb; /* 밝은 글자 */
+    box-sizing: border-box;
+    background-color: #111827;
+    color: #f9fafb;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-/* 헤더 */
+/* 헤더 - 전체 폭 사용 */
+.page-header {
+    margin: 0 0 24px 0;   /* max-width 제거 */
+}
+
 .page-header h1 {
     margin: 0;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
-    color: #f9fafb;
 }
 
 .page-subtitle {
     margin: 4px 0 0 0;
     font-size: 14px;
-    color: #9ca3af; 
+    color: #9ca3af;
 }
 
-/* 2단 레이아웃 */
+/* 🔥 화면 전체를 쓰는 3열 레이아웃 */
 .page-content {
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;                         /* 전체 폭 사용 */
     display: grid;
-    grid-template-columns: 300px 1fr; 
+    grid-template-columns: 260px minmax(0, 2.3fr) minmax(0, 1.2fr);
     gap: 24px;
+    align-items: flex-start;
 }
 
-/* 패널 (카드) */
+/* 공통 카드 스타일 */
 .panel {
-    background-color: #1f2937; /* 다크카드 */
+    background-color: #1f2937;
     color: #f3f4f6;
-    padding: 16px 20px;
+    padding: 18px 20px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    box-sizing: border-box;
 }
 
-/* 제목 */
 .panel-title {
     font-size: 18px;
     font-weight: 600;
     margin: 0 0 12px 0;
-    color: #f9fafb;
 }
 
-/* 부제목 */
 .panel-subtitle {
     font-size: 14px;
     margin-bottom: 8px;
     color: #d1d5db;
 }
+
+/* 좌/중/우 영역 (필요시 커스터마이징용) */
+.page-left { }
+.page-center { display: flex; flex-direction: column; gap: 16px; }
+.page-right { }
 
 /* 옵션 리스트 */
 .option-list {
@@ -66,13 +73,13 @@
     margin-top: 4px;
 }
 
-/* 오류/안내 텍스트 */
+/* 안내 텍스트 */
 .error-text {
-    color: #f87171; /* 연한 빨강 */
+    color: #f87171;
 }
 
 .placeholder-text {
-    color: #6b7280; 
+    color: #6b7280;
 }
 
 /* 차트 placeholder */
@@ -85,7 +92,7 @@
     font-size: 13px;
 }
 
-/* 반응형 */
+/* 모바일 등 좁은 화면에서만 1열로 변경 */
 @media (max-width: 900px) {
     .page-content {
         grid-template-columns: 1fr;
