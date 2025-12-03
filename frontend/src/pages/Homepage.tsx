@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { fetchStock, fetchStockDaily } from "../api/StockApi";
-import type { StockData, DailyCandle } from "../types/stockTypes";
+import { fetchStock, fetchStockSeries } from "../api/StockApi";
+import type { StockData, DailyCandle } from "../types/StockTypes";
+import type { Timeframe } from "../api/StockApi";
 import StockForm from "../components/StockForm/StockForm";
 import StockTable from "../components/StockTable/StockTable";
 import StockChart from "../components/StockChart/StockChart";
@@ -11,13 +12,14 @@ function HomePage() {
     const [daily, setDaily] = useState<DailyCandle[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+    const [timeframe, setTimeframe] = useState<Timeframe>("DAILY");
 
     const handleSearch = async (symbol: string) => {
+        
         setLoading(true);
         setError(null);
 
         const result = await fetchStock(symbol);
-
         if ("error" in result) {
             setError(result.error);
             setData(null);
@@ -27,16 +29,39 @@ function HomePage() {
         } else {
             setData(result);
         }
-
-        const dailyRes = await fetchStockDaily(symbol);
-        if ("error" in dailyRes) {
+        
+        const seriesRes = await fetchStockSeries(symbol, timeframe);
+        if ("error" in seriesRes) {
+            setError(seriesRes.error);
             setDaily([]);
+            setLoading(false);
+            return;
         } else {
-            setDaily(dailyRes.daily);
+            setDaily(seriesRes.daily);  
         }
 
         setLoading(false);
     };
+
+    // TimeFrame 버튼 클릭시 상태변경, 이미 심볼이 존재하면 차트 재조회
+    const handleTimeframeChange = async (next: Timeframe) => {
+        setTimeframe(next);
+        // 아직 종목 조회 전이면 API 조회 불필요        
+        if (!data) return;
+        
+        setLoading(true);
+        setError(null);
+
+        const seriesRes = await fetchStockSeries(data.symbol, next);
+        if ("error" in seriesRes) {
+            setError(seriesRes.error);
+            setDaily([]);
+            setLoading(false);
+            return;
+        }
+        setDaily(seriesRes.daily);
+        setLoading(false);
+    }
 
     return (
         <div className="page-root">
@@ -72,7 +97,32 @@ function HomePage() {
                     </div>
 
                     <div className="panel" style={{ marginTop: 16 }}>
-                        <h2 className="panel-title">차트</h2>
+                        <div className="panel-header-row">
+                            <h2 className="panel-title">차트</h2>
+                            <div className={`timeframe-toggle timeframe-${timeframe.toLowerCase()}`}>
+                                <div className="timeframe-indicator" />
+
+                                <button
+                                    className={`tf-btn ${timeframe === "DAILY" ? "active" : ""}`}
+                                    onClick={() => handleTimeframeChange("DAILY")}
+                                >
+                                    일간
+                                </button>
+                                <button
+                                    className={`tf-btn ${timeframe === "WEEKLY" ? "active" : ""}`}
+                                    onClick={() => handleTimeframeChange("WEEKLY")}
+                                >
+                                    주간
+                                </button>
+                                <button
+                                    className={`tf-btn ${timeframe === "MONTHLY" ? "active" : ""}`}
+                                    onClick={() => handleTimeframeChange("MONTHLY")}
+                                >
+                                    월간
+                                </button>
+                            </div>
+                        </div>
+                        
                         {daily.length > 0 && data ? (
                             <StockChart symbol={data.symbol} data={daily} darkMode={true} />
                         ) : (
