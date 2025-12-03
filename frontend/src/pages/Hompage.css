@@ -10,7 +10,7 @@
 
 /* 헤더 - 전체 폭 사용 */
 .page-header {
-    margin: 0 0 24px 0;   /* max-width 제거 */
+    margin: 0 0 24px 0;
 }
 
 .page-header h1 {
@@ -25,9 +25,9 @@
     color: #9ca3af;
 }
 
-/* 🔥 화면 전체를 쓰는 3열 레이아웃 */
+/* 화면 전체를 쓰는 3열 레이아웃 */
 .page-content {
-    width: 100%;                         /* 전체 폭 사용 */
+    width: 100%;
     display: grid;
     grid-template-columns: 260px minmax(0, 2.3fr) minmax(0, 1.2fr);
     gap: 24px;
@@ -57,9 +57,9 @@
 }
 
 /* 좌/중/우 영역 (필요시 커스터마이징용) */
-.page-left { }
+/* .page-left { } */
 .page-center { display: flex; flex-direction: column; gap: 16px; }
-.page-right { }
+/* .page-right { } */
 
 /* 옵션 리스트 */
 .option-list {

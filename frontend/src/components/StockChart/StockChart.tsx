@@ -3,7 +3,7 @@ import { Line } from "react-chartjs-2"
 import type { DailyCandle } from "../../types/stockTypes";
 
 ChartJS.register(
-    LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend
+    LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend, plugins
 );
 
 interface Props {
