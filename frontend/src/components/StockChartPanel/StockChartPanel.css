@@ -6,6 +6,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 12px;
+    margin-bottom: 8px; 
 }
 
 /* 타임프레임 + 기간 필터 묶음 */
