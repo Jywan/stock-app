@@ -82,16 +82,6 @@
     color: #6b7280;
 }
 
-/* 차트 placeholder */
-.chart-placeholder {
-    border: 1px dashed #4b5563;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    color: #9ca3af;
-    font-size: 13px;
-}
-
 /* 모바일 등 좁은 화면에서만 1열로 변경 */
 @media (max-width: 900px) {
     .page-content {
@@ -141,18 +131,4 @@
     animation-timing-function: ease-out;
     animation-fill-mode: forwards;
     animation-delay: 0.16s;
-}
-
-.fade-in {
-    animation: fade-in-up 0.25s ease-out;
-}
-
-@keyframes fade-in-up {
-    from {
-        opacity: 0;
-        transform: translateY(6px);
-    } to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }

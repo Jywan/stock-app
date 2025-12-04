@@ -18,3 +18,13 @@ export interface DailyCandle {
     close: number;
     volume: number;
 }
+
+export interface NewsArticle {
+    title: string;
+    summary: string;
+    source: string;
+    url: string;
+    time_published: string;
+    overall_sentiment_score: number;
+    overall_sentiment_label: string;
+}

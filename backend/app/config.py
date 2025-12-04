@@ -7,3 +7,4 @@ load_dotenv(evn_path)
 
 class Config:
     ALPHAVANTAGE_API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
+    DEBUG = True

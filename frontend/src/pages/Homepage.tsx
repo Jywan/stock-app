@@ -1,18 +1,25 @@
 import { useState } from "react";
-import { fetchStock, fetchStockSeries } from "../api/StockApi";
-import type { StockData, DailyCandle } from "../types/StockTypes";
+import { fetchStock, fetchStockSeries, fetchStockNews } from "../api/StockApi";
+import type { StockData, DailyCandle, NewsArticle } from "../types/StockTypes";
 import type { Timeframe } from "../api/StockApi";
 import StockForm from "../components/StockForm/StockForm";
 import RealtimeQuotePanel from "../components/RealtimeQuotePanel/RealtimeQuotePanel"
 import StockChartPanel from "../components/StockChartPanel/StockChartPanel"
+import StockNewsPanel from "../components/StockNewsPanel/StockNewsPanel";
 import "./Hompage.css";  
 
 function HomePage() {
+    // 주식 데이터
     const [data, setData] = useState<StockData | null>(null);
     const [daily, setDaily] = useState<DailyCandle[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [timeframe, setTimeframe] = useState<Timeframe>("DAILY");
+    
+    // 해당 주식 관련 뉴스
+    const [news, setNews] = useState<NewsArticle[]>([]);
+    const [newsError, setNewsError] = useState<string | null>(null);
+    const [newsLoading, setNewsLoading] = useState(false);
 
     const handleSearch = async (symbol: string) => {
         
@@ -25,6 +32,10 @@ function HomePage() {
             setData(null);
             setDaily([]);
             setLoading(false);
+
+            setNews([]);
+            setNewsError(null);
+            setNewsLoading(false);
             return;
         } else {
             setData(result);
@@ -35,12 +46,17 @@ function HomePage() {
             setError(seriesRes.error);
             setDaily([]);
             setLoading(false);
+
+            setNews([]);
+            setNewsError(null);
+            setNewsLoading(false);
             return;
         } else {
             setDaily(seriesRes.daily);  
         }
 
         setLoading(false);
+        await reloadNews(symbol);
     };
 
     // TimeFrame 버튼 클릭시 상태변경, 이미 심볼이 존재하면 차트 재조회
@@ -61,6 +77,25 @@ function HomePage() {
         }
         setDaily(seriesRes.daily);
         setLoading(false);
+    }
+
+    const reloadNews = async (symbol?: string) => {
+        const sym = symbol ?? data?.symbol;
+        if (!sym) return;
+
+        setNewsLoading(true);
+        setNewsError(null);
+
+        const res = await fetchStockNews(sym);
+        if ("error" in res) {
+            setNews([]);
+            setNewsError(res.error);
+            setNewsLoading(false);
+            return;
+        }
+
+        setNews(res.articles);
+        setNewsLoading(false);
     }
 
     return (
@@ -91,14 +126,7 @@ function HomePage() {
                 </section>
 
                 {/* 우측: 뉴스/리스트(추후) */}
-                <section className="page-right panel">
-                    <h2 className="panel-title">관련 뉴스 (추후)</h2>
-                    <p className="placeholder-text">
-                        향후 Finnhub, MarketAux 등의 API를 연동해
-                        <br />
-                        해당 종목 관련 뉴스 목록을 출력할 예정입니다.
-                    </p>
-                </section>
+                <StockNewsPanel symbol={data? data.symbol : null} articles={news} loading={newsLoading} error={newsError} onReload={() => reloadNews()}/>
             </div>
         </div>
     );
