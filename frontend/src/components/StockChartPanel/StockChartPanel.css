@@ -1,0 +1,112 @@
+/* ============================
+   차트 패널 헤더
+   ============================ */
+   .panel-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+/* 타임프레임 + 기간 필터 묶음 */
+.chart-header-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+/* ============================
+   타임프레임 토글 (일간/주간/월간)
+   ============================ */
+.timeframe-toggle {
+    position: relative;
+    display: inline-flex;
+    background-color: #020617;
+    padding: 3px;
+    border-radius: 999px;
+    border: 1px solid #374151;
+    overflow: hidden;
+    min-width: 150px;
+}
+
+.timeframe-indicator {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: calc((100% - 6px) / 3);
+    border-radius: 999px;
+    background-color: #10b981;
+    box-shadow: 0 0 8px rgba(16,185,129,0.6);
+    transition: transform 0.25s ease;
+    z-index: 0;
+}
+
+/* 상태별 indicator 위치 */
+.timeframe-toggle.timeframe-daily .timeframe-indicator { transform: translateX(0); }
+.timeframe-toggle.timeframe-weekly .timeframe-indicator { transform: translateX(100%); }
+.timeframe-toggle.timeframe-monthly .timeframe-indicator { transform: translateX(200%); }
+
+.tf-btn {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    border: none;
+    padding: 5px 10px;
+    font-size: 11px;
+    background: transparent;
+    border-radius: 999px;
+    color: #e5e7eb;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.tf-btn.active {
+    color: #0f172a;
+    font-weight: 600;
+}
+
+/* ============================
+   기간 필터 토글 (1M/3M/6M/1Y/ALL)
+   ============================ */
+.range-toggle {
+    display: inline-flex;
+    gap: 6px;
+    background-color: #020617;
+    padding: 3px 4px;
+    border-radius: 999px;
+    border: 1px solid #374151;
+}
+
+.range-btn {
+    border: none;
+    padding: 4px 10px;
+    font-size: 11px;
+    border-radius: 999px;
+    background: transparent;
+    color: #9ca3af;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.range-btn:hover:not(.active) {
+    background-color: #1f2937;
+    color: #e5e7eb;
+}
+
+.range-btn.active {
+    background-color: #2563eb;
+    color: #f9fafb;
+    font-weight: 600;
+}
+
+/* fade-in for chart */
+.fade-in {
+    animation: fade-in-up 0.25s ease-out;
+}
+
+@keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
