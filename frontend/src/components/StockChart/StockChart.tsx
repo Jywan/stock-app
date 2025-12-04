@@ -1,7 +1,6 @@
 import {Chart as ChartJS, LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend, plugins} from "chart.js"
 import { Line } from "react-chartjs-2"
-import type { DailyCandle } from "../../types/stockTypes";
-
+import type { DailyCandle } from "../../types/StockTypes"
 ChartJS.register(
     LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend, plugins
 );
