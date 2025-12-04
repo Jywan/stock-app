@@ -3,7 +3,7 @@ import { fetchStock, fetchStockSeries } from "../api/StockApi";
 import type { StockData, DailyCandle } from "../types/StockTypes";
 import type { Timeframe } from "../api/StockApi";
 import StockForm from "../components/StockForm/StockForm";
-import StockTable from "../components/StockTable/StockTable";
+import RealtimeQuotePanel from "../components/RealtimeQuotePanel/RealtimeQuotePanel"
 import StockChart from "../components/StockChart/StockChart";
 import "./Hompage.css";  
 
@@ -86,15 +86,7 @@ function HomePage() {
 
                 {/* 중앙: 시세 + 차트 */}
                 <section className="page-center">
-                    <div className="panel">
-                        <h2 className="panel-title">실시간 시세</h2>
-                        {loading && <p>로딩 중...</p>}
-                        {error && <p className="error-text">에러: {error}</p>}
-                        {data && <StockTable data={data} />}
-                        {!loading && !error && !data && (
-                            <p className="placeholder-text">좌측에서 종목을 검색하면 이 영역에 시세가 표시됩니다.</p>
-                        )}
-                    </div>
+                    <RealtimeQuotePanel loading={loading} error={error} data={data} />
 
                     <div className="panel" style={{ marginTop: 16 }}>
                         <div className="panel-header-row">
@@ -124,7 +116,9 @@ function HomePage() {
                         </div>
                         
                         {daily.length > 0 && data ? (
-                            <StockChart symbol={data.symbol} data={daily} darkMode={true} />
+                            <div className="fade-in" key={`${data.symbol}-${timeframe}`}>
+                                <StockChart symbol={data.symbol} data={daily} darkMode={true} />
+                            </div>
                         ) : (
                             <div className="chart-placeholder">
                                 좌측에서 종목을 검색하면 기간별 차트가 표시됩니다.
