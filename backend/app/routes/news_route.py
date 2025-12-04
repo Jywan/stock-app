@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify
 from ..services.alphavantage_service import AlphaVantageService
+from ..utils.datetime_utils import format_alphavantage_time
 
 news_bp = Blueprint('news', __name__)
 
@@ -14,12 +15,14 @@ def get_stock_news(symbol: str):
     # 프론트에서 필요한 필드만 추출
     articles = []
     for item in feed:
+        raw_time = item.get("time_published", "")
+
         articles.append({
             "title": item.get("title", ""),
             "summary": item.get("summary", ""),
             "source": item.get("source", ""),
             "url": item.get("url", ""),
-            "time_published": item.get("time_published", ""),
+            "time_published": format_alphavantage_time(raw_time),
             "overall_sentiment_score": item.get("overall_sentiment_score", ""),
             "overall_sentiment_label": item.get("overall_sentiment_label", ""),
         })
