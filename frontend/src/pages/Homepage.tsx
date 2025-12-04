@@ -4,7 +4,7 @@ import type { StockData, DailyCandle } from "../types/StockTypes";
 import type { Timeframe } from "../api/StockApi";
 import StockForm from "../components/StockForm/StockForm";
 import RealtimeQuotePanel from "../components/RealtimeQuotePanel/RealtimeQuotePanel"
-import StockChart from "../components/StockChart/StockChart";
+import StockChartPanel from "../components/StockChartPanel/StockChartPanel"
 import "./Hompage.css";  
 
 function HomePage() {
@@ -87,44 +87,7 @@ function HomePage() {
                 {/* 중앙: 시세 + 차트 */}
                 <section className="page-center">
                     <RealtimeQuotePanel loading={loading} error={error} data={data} />
-
-                    <div className="panel" style={{ marginTop: 16 }}>
-                        <div className="panel-header-row">
-                            <h2 className="panel-title">차트</h2>
-                            <div className={`timeframe-toggle timeframe-${timeframe.toLowerCase()}`}>
-                                <div className="timeframe-indicator" />
-
-                                <button
-                                    className={`tf-btn ${timeframe === "DAILY" ? "active" : ""}`}
-                                    onClick={() => handleTimeframeChange("DAILY")}
-                                >
-                                    일간
-                                </button>
-                                <button
-                                    className={`tf-btn ${timeframe === "WEEKLY" ? "active" : ""}`}
-                                    onClick={() => handleTimeframeChange("WEEKLY")}
-                                >
-                                    주간
-                                </button>
-                                <button
-                                    className={`tf-btn ${timeframe === "MONTHLY" ? "active" : ""}`}
-                                    onClick={() => handleTimeframeChange("MONTHLY")}
-                                >
-                                    월간
-                                </button>
-                            </div>
-                        </div>
-                        
-                        {daily.length > 0 && data ? (
-                            <div className="fade-in" key={`${data.symbol}-${timeframe}`}>
-                                <StockChart symbol={data.symbol} data={daily} darkMode={true} />
-                            </div>
-                        ) : (
-                            <div className="chart-placeholder">
-                                좌측에서 종목을 검색하면 기간별 차트가 표시됩니다.
-                            </div>
-                        )}
-                    </div>
+                    <StockChartPanel symbol={data ? data.symbol : null} daily={daily} timeframe={timeframe} loading={loading} onChangeTimeframe={handleTimeframeChange} />
                 </section>
 
                 {/* 우측: 뉴스/리스트(추후) */}
