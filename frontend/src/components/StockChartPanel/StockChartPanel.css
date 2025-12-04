@@ -9,6 +9,16 @@
     margin-bottom: 8px; 
 }
 
+/* 차트 placeholder */
+.chart-placeholder {
+    border: 1px dashed #4b5563;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 13px;
+}
+
 /* 타임프레임 + 기간 필터 묶음 */
 .chart-header-controls {
     display: flex;
