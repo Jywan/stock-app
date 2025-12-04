@@ -167,6 +167,64 @@
 
 /* 활성 버튼만 폰트 강조 */
 .tf-btn.active {
-    color: #0f172a;              /* 초록 배경 위에서 잘 보이는 진한 색 */
+    color: #0f172a;
     font-weight: 600;
+}
+
+/* 패널 엔트리 애니메이션: 왼쪽에서 슬라이드 + 페이드인 */
+@keyframes panel-enter-from-left {
+    from {
+        opacity: 0;
+        transform: translateX(-24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 기본값: 처음에는 안 보이도록 */
+.page-left,
+.page-center,
+.page-right {
+    opacity: 0;
+}
+
+/* 좌 → 우 순서로 조금씩 딜레이를 줘서 튀어나오는 느낌 */
+.page-left {
+    animation-name: panel-enter-from-left;
+    animation-duration: 0.45s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 0.00s;
+}
+
+.page-center {
+    animation-name: panel-enter-from-left;
+    animation-duration: 0.45s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 0.08s;
+}
+
+.page-right {
+    animation-name: panel-enter-from-left;
+    animation-duration: 0.45s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 0.16s;
+}
+
+.fade-in {
+    animation: fade-in-up 0.25s ease-out;
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    } to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
