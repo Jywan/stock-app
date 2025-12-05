@@ -45,9 +45,9 @@ function StockChartPanel({
         });
     }, [daily, range]);
 
-    const ma5 = useMemo(() => calcSMA(filteredData, 5), [filteredData]);
-    const ma20 = useMemo(() => calcSMA(filteredData, 20), [filteredData]);
-    const ma60 = useMemo(() => calcSMA(filteredData, 60), [filteredData]);
+    const sma5 = useMemo(() => calcSMA(filteredData, 5), [filteredData]);
+    const sma20 = useMemo(() => calcSMA(filteredData, 20), [filteredData]);
+    const sma60 = useMemo(() => calcSMA(filteredData, 60), [filteredData]);
 
     return (
         <div className="panel" style={{ marginTop: 16 }}>
@@ -129,9 +129,9 @@ function StockChartPanel({
                     <StockChart 
                         symbol={symbol} 
                         data={filteredData} 
-                        ma5={timeframe === "DAILY" ? ma5 : undefined} 
-                        ma20={timeframe === "DAILY" ? ma20 : undefined} 
-                        ma60={timeframe === "DAILY" ? ma60 : undefined} 
+                        sma5={timeframe === "DAILY" ? sma5 : undefined} 
+                        sma20={timeframe === "DAILY" ? sma20 : undefined} 
+                        sma60={timeframe === "DAILY" ? sma60 : undefined} 
                         darkMode={true} />
                 </div>
             ) : (
