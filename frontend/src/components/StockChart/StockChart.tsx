@@ -8,13 +8,13 @@ ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Tooltip,
 interface Props {
     symbol: string;
     data: DailyCandle[];
-    ma5?: (number | null)[];
-    ma20?: (number | null)[];
-    ma60?: (number | null)[];
+    sma5?: (number | null)[];
+    sma20?: (number | null)[];
+    sma60?: (number | null)[];
     darkMode?: boolean;
 }
 
-function StockChart({ symbol, data, ma5, ma20, ma60, darkMode = true}: Props) {
+function StockChart({ symbol, data, sma5, sma20, sma60, darkMode = true}: Props) {
     const labels = data.map((d) => d.date);
     const prices = data.map((d) => d.close);
     
@@ -31,10 +31,10 @@ function StockChart({ symbol, data, ma5, ma20, ma60, darkMode = true}: Props) {
     
     const datasets: ChartData<"line">["datasets"] = [baseDataset]; 
     
-    if (ma5) {
+    if (sma5) {
         datasets.push({
-            label: "MA5",
-            data: ma5,
+            label: "SMA5",
+            data: sma5,
             borderColor: "#ef4444",
             borderWidth: 1.2,
             pointRadius: 0,
@@ -43,10 +43,10 @@ function StockChart({ symbol, data, ma5, ma20, ma60, darkMode = true}: Props) {
         });
     }
 
-    if (ma20) {
+    if (sma20) {
         datasets.push({
-            label: "MA20",
-            data: ma20,
+            label: "SMA20",
+            data: sma20,
             borderColor: "#10b981",
             borderWidth: 1.5,
             pointRadius: 0,
@@ -55,10 +55,10 @@ function StockChart({ symbol, data, ma5, ma20, ma60, darkMode = true}: Props) {
         });
     }
 
-    if (ma60) {
+    if (sma60) {
         datasets.push({
-            label: "MA60",
-            data: ma60,
+            label: "SMA60",
+            data: sma60,
             borderColor: "#fbbf24",
             borderWidth: 1.5,
             pointRadius: 0,
