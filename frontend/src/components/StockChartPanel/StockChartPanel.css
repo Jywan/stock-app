@@ -121,3 +121,42 @@
     from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ============================
+   지표 필터 토글 (SMA/EMA)
+   ============================ */
+.indicator-toggle {
+    display: inline-flex;
+    gap: 4px;
+    background-color: #020617;
+    padding: 3px 4px;
+    border-radius: 999px;
+    border: 1px solid #374151;
+}
+
+.indicator-btn {
+    border: none;
+    background: transparent;
+    color: #9ca3af;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.indicator-btn.active {
+    background-color: #f97316;
+    color: #111827;
+    font-weight: 600;
+}
+
+.indicator-btn:hover:not(.active) {
+    background-color: #111827;
+    color: #e5e7eb;
+}
+
+.indicator-btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
