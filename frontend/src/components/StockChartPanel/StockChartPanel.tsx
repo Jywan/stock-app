@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import StockChart from "../StockChart/StockChart";
-import { calcSMA } from "../../utils/indicators";
+import { calcSMA, calcEMA } from "../../utils/indicators";
 import type { DailyCandle } from "../../types/StockTypes";
 import type { Timeframe } from "../../api/StockApi";
 import "./StockChartPanel.css";
@@ -45,9 +45,15 @@ function StockChartPanel({
         });
     }, [daily, range]);
 
+    // SMA
     const sma5 = useMemo(() => calcSMA(filteredData, 5), [filteredData]);
     const sma20 = useMemo(() => calcSMA(filteredData, 20), [filteredData]);
     const sma60 = useMemo(() => calcSMA(filteredData, 60), [filteredData]);
+
+    // EMA
+    const ema5 = useMemo(() => calcEMA(filteredData, 5), [filteredData])
+    const ema20 = useMemo(() => calcEMA(filteredData, 20), [filteredData])
+    const ema60 = useMemo(() => calcEMA(filteredData, 60), [filteredData])
 
     return (
         <div className="panel" style={{ marginTop: 16 }}>
@@ -132,6 +138,9 @@ function StockChartPanel({
                         sma5={timeframe === "DAILY" ? sma5 : undefined} 
                         sma20={timeframe === "DAILY" ? sma20 : undefined} 
                         sma60={timeframe === "DAILY" ? sma60 : undefined} 
+                        ema5={timeframe === "DAILY" ? ema5 : undefined} 
+                        ema20={timeframe === "DAILY" ? ema20 : undefined} 
+                        ema60={timeframe === "DAILY" ? ema60 : undefined} 
                         darkMode={true} />
                 </div>
             ) : (
