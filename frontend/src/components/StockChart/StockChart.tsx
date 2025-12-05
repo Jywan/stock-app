@@ -11,10 +11,13 @@ interface Props {
     sma5?: (number | null)[];
     sma20?: (number | null)[];
     sma60?: (number | null)[];
+    ema5?: (number | null)[];
+    ema20?: (number | null)[];
+    ema60?: (number | null)[];
     darkMode?: boolean;
 }
 
-function StockChart({ symbol, data, sma5, sma20, sma60, darkMode = true}: Props) {
+function StockChart({ symbol, data, sma5, sma20, sma60, ema5, ema20, ema60, darkMode = true}: Props) {
     const labels = data.map((d) => d.date);
     const prices = data.map((d) => d.close);
     
@@ -65,6 +68,42 @@ function StockChart({ symbol, data, sma5, sma20, sma60, darkMode = true}: Props)
             tension: 0.2,
             spanGaps: true,
         });
+    }
+
+    if (ema5) {
+        datasets.push({
+            label: "EMA5",
+            data: ema5,
+            borderColor: "#f97316",
+            borderWidth: 1.5,
+            pointRadius: 0,
+            tension: 0.2,
+            spanGaps: true,
+        })
+    }
+
+    if (ema20) {
+        datasets.push({
+            label: "EMA20",
+            data: ema20,
+            borderColor: "#8b5cf6",
+            borderWidth: 1.5,
+            pointRadius: 0,
+            tension: 0.2,
+            spanGaps: true,
+        })
+    }
+
+    if (ema60) {
+        datasets.push({
+            label: "EMA60",
+            data: ema60,
+            borderColor: "#06b6d4",
+            borderWidth: 1.5,
+            pointRadius: 0,
+            tension: 0.2,
+            spanGaps: true,
+        })
     }
 
     const chartData: ChartData<"line"> = {
