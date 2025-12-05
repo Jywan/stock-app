@@ -4,10 +4,11 @@ export interface StockData {
     high: string;
     low: string;
     price: string;
-    previous_close: string;
-    change_percent: string;
     volume: string;
     latest_trading_day: string;
+    previous_close: string;
+    change: string;
+    change_percent: string;
 }
 
 export interface DailyCandle {
