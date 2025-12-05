@@ -6,7 +6,7 @@ import type { Timeframe } from "../../api/StockApi";
 import "./StockChartPanel.css";
 
 type RangeOption = "1M" | "3M" | "6M" | "1Y" | "ALL";
-
+type IndicatorMode = "SMA" | "EMA" | "ALL";
 interface Props {
     symbol: string | null;
     daily: DailyCandle[];
@@ -23,8 +23,9 @@ function StockChartPanel({
     onChangeTimeframe,
 }: Props) {
     const [range, setRange] = useState<RangeOption>("3M");
+    const [indicatorMode, setIndicatorMode] = useState<IndicatorMode>("SMA");
 
-    // 기간 필터 적용
+    // 기간mo 필터 적용
     const filteredData = useMemo(() => {
         if (!daily || daily.length === 0) return [];
 
@@ -126,22 +127,70 @@ function StockChartPanel({
                             전체
                         </button>
                     </div>
+
+                    <div className="indicator-toggle">
+                        <button
+                            className={`indicator-btn ${indicatorMode === "SMA" ? "active" : ""}`}
+                            onClick={() =>setIndicatorMode("SMA")}
+                            disabled={loading || timeframe !== "DAILY"}
+                        >
+                            SMA
+                        </button>
+                        <button
+                            className={`indicator-btn ${indicatorMode === "EMA" ? "active" : ""}`}
+                            onClick={() =>setIndicatorMode("EMA")}
+                            disabled={loading || timeframe !== "DAILY"}
+                        >
+                            EMA
+                        </button>
+                        <button
+                            className={`indicator-btn ${indicatorMode === "ALL" ? "all-active" : ""}`}
+                            onClick={() => setIndicatorMode("ALL")}
+                        >
+                            전체
+                        </button>
+                    </div>
                 </div>
             </div>
 
             {/* === 차트 본문 === */}
             {filteredData.length > 0 && symbol ? (
-                <div className="fade-in" key={`${symbol}-${timeframe}-${range}`}>
+                <div className="fade-in" key={`${symbol}`}>
                     <StockChart 
                         symbol={symbol} 
                         data={filteredData} 
-                        sma5={timeframe === "DAILY" ? sma5 : undefined} 
-                        sma20={timeframe === "DAILY" ? sma20 : undefined} 
-                        sma60={timeframe === "DAILY" ? sma60 : undefined} 
-                        ema5={timeframe === "DAILY" ? ema5 : undefined} 
-                        ema20={timeframe === "DAILY" ? ema20 : undefined} 
-                        ema60={timeframe === "DAILY" ? ema60 : undefined} 
-                        darkMode={true} />
+                        sma5={
+                            timeframe === "DAILY" && (indicatorMode === "SMA" || indicatorMode === "ALL")
+                                ? sma5
+                                : undefined
+                        }
+                        sma20={
+                            timeframe === "DAILY" && (indicatorMode === "SMA" || indicatorMode === "ALL")
+                                ? sma20
+                                : undefined
+                        }
+                        sma60={
+                            timeframe === "DAILY" && (indicatorMode === "SMA" || indicatorMode === "ALL")
+                                ? sma60
+                                : undefined
+                        }
+                        ema5={
+                            timeframe === "DAILY" && (indicatorMode === "EMA" || indicatorMode === "ALL")
+                                ? ema5
+                                : undefined
+                        }
+                        ema20={
+                            timeframe === "DAILY" && (indicatorMode === "EMA" || indicatorMode === "ALL")
+                                ? ema20
+                                : undefined
+                        }
+                        ema60={
+                            timeframe === "DAILY" && (indicatorMode === "EMA" || indicatorMode === "ALL")
+                                ? ema60
+                                : undefined
+                        }
+                        darkMode={true}
+                    />
                 </div>
             ) : (
                 <div className="chart-placeholder">
