@@ -32,7 +32,7 @@ function RealtimeQuotePanel({ loading, error, data }: Props) {
 
     const changeIcon = isUp ? "▲" : isDown ? "▼" : "";
     const changeText = data && (data.change || data.change_percent) 
-                    ? `${data.change ?? ""} ${data.change_percent ?? ""}`.trim()
+                    ? `${data.change ?? ""} / ${data.change_percent ?? ""}`.trim()
                     : "-";
 
     const changeClass = isUp
@@ -81,7 +81,7 @@ function RealtimeQuotePanel({ loading, error, data }: Props) {
                 </div>
 
                 <div className="quote-price-big">
-                    {formatPrice(data.high)}
+                    {formatPrice(data.high)} $
                 </div>
 
                 <div className={changeClass}>
@@ -94,25 +94,25 @@ function RealtimeQuotePanel({ loading, error, data }: Props) {
                 <div className="quote-item">
                     <div className="quote-label">시가</div>
                     <div className="quote-value">
-                        {formatPrice(data.open)}
+                        {formatPrice(data.open)} $
                     </div>
                 </div>
                 <div className="quote-item">
                     <div className="quote-label">고가</div>
                     <div className="quote-value">
-                        {formatPrice(data.high)}
+                        {formatPrice(data.high)} $
                     </div>
                 </div>
                 <div className="quote-item">
                     <div className="quote-label">저가</div>
                     <div className="quote-value">
-                        {formatPrice(data.low)}
+                        {formatPrice(data.low)} $
                     </div>
                 </div>
                 <div className="quote-item">
                     <div className="quote-label">전일 종가</div>
                     <div className="quote-value">
-                        {formatPrice(data.previous_close)}
+                        {formatPrice(data.previous_close)} $
                     </div>
                 </div>
                 <div className="quote-item">
