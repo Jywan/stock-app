@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import StockChart from "../StockChart/StockChart";
+import { calcSMA } from "../../utils/indicators";
 import type { DailyCandle } from "../../types/StockTypes";
 import type { Timeframe } from "../../api/StockApi";
 import "./StockChartPanel.css";
@@ -43,6 +44,10 @@ function StockChartPanel({
             return d >= cutoff;
         });
     }, [daily, range]);
+
+    const ma5 = useMemo(() => calcSMA(filteredData, 5), [filteredData]);
+    const ma20 = useMemo(() => calcSMA(filteredData, 20), [filteredData]);
+    const ma60 = useMemo(() => calcSMA(filteredData, 60), [filteredData]);
 
     return (
         <div className="panel" style={{ marginTop: 16 }}>
@@ -121,7 +126,13 @@ function StockChartPanel({
             {/* === 차트 본문 === */}
             {filteredData.length > 0 && symbol ? (
                 <div className="fade-in" key={`${symbol}-${timeframe}-${range}`}>
-                    <StockChart symbol={symbol} data={filteredData} darkMode={true} />
+                    <StockChart 
+                        symbol={symbol} 
+                        data={filteredData} 
+                        ma5={timeframe === "DAILY" ? ma5 : undefined} 
+                        ma20={timeframe === "DAILY" ? ma20 : undefined} 
+                        ma60={timeframe === "DAILY" ? ma60 : undefined} 
+                        darkMode={true} />
                 </div>
             ) : (
                 <div className="chart-placeholder">

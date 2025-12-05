@@ -1,34 +1,75 @@
-import {Chart as ChartJS, LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend, plugins} from "chart.js"
-import { Line } from "react-chartjs-2"
-import type { DailyCandle } from "../../types/StockTypes"
-ChartJS.register(
-    LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend, plugins
-);
+import {Chart as ChartJS, LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend} from "chart.js";
+import { Line } from "react-chartjs-2";
+import type { DailyCandle } from "../../types/StockTypes";
+import type { ChartData } from "chart.js";
+
+ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend);
 
 interface Props {
     symbol: string;
     data: DailyCandle[];
+    ma5?: (number | null)[];
+    ma20?: (number | null)[];
+    ma60?: (number | null)[];
     darkMode?: boolean;
 }
 
-function StockChart({ symbol, data, darkMode = true}: Props) {
+function StockChart({ symbol, data, ma5, ma20, ma60, darkMode = true}: Props) {
     const labels = data.map((d) => d.date);
     const prices = data.map((d) => d.close);
+    
+    const baseDataset = {
+        label: `${symbol} 종가`,
+        data: prices,
+        borderColor: darkMode ? "#3b82f6" : "#2563eb",
+        backGroundColor: darkMode ? "rgba(59,130,246,0.15)" : "rgba(37,99,235,0.2)",
+        fill: true,
+        tension: 0.25, // 곡선정도
+        pointRadius: 2.5,
+        pointHoverRadius: 5,
+    }
+    
+    const datasets: ChartData<"line">["datasets"] = [baseDataset]; 
+    
+    if (ma5) {
+        datasets.push({
+            label: "MA5",
+            data: ma5,
+            borderColor: "#ef4444",
+            borderWidth: 1.2,
+            pointRadius: 0,
+            tension: 0.2,
+            spanGaps: true
+        });
+    }
 
-    const chartData = {
+    if (ma20) {
+        datasets.push({
+            label: "MA20",
+            data: ma20,
+            borderColor: "#10b981",
+            borderWidth: 1.5,
+            pointRadius: 0,
+            tension: 0.2,
+            spanGaps: true,
+        });
+    }
+
+    if (ma60) {
+        datasets.push({
+            label: "MA60",
+            data: ma60,
+            borderColor: "#fbbf24",
+            borderWidth: 1.5,
+            pointRadius: 0,
+            tension: 0.2,
+            spanGaps: true,
+        });
+    }
+
+    const chartData: ChartData<"line"> = {
         labels,
-        datasets : [
-            {
-                label: `${symbol} 종가`,
-                data: prices,
-                borderColor: darkMode ? "#3b82f6" : "#2563eb",
-                backGroundColor: darkMode ? "rgba(59,130,246,0.15)" : "rgba(37,99,235,0.2)",
-                fill: true,
-                tension: 0.25, // 곡선정도
-                pointRadius: 2.5,
-                pointHoverRadius: 5,
-            },
-        ],
+        datasets,
     };
 
     const textColor = darkMode ? "#e5e7eb" : "#111827";
