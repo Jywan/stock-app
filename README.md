@@ -27,7 +27,8 @@
 - 3. npm run dev
 
 ## 사용 API
-- 알파밴티지 (Alpha Vantage) 무료버전
+- 알파밴티지 (Alpha Vantage) 무료버전 - 심볼로 주식데이터 출력
+- exchangerate - 환율정보 API + 스케쥴러 
 
 ## Environment Variables
 `.env` 파일은 Git에 포함되지 않습니다.

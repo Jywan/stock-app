@@ -145,6 +145,12 @@
     transition: background-color 0.15s ease, color 0.15s ease;
 }
 
+.indicator-btn.all-active {
+    background-color: #f97316;
+    color: #111827;
+    font-weight: 600;
+}
+
 .indicator-btn.active {
     background-color: #f97316;
     color: #111827;
