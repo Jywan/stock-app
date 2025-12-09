@@ -1,4 +1,5 @@
 import type { StockData, DailyCandle, NewsArticle } from "../types/StockTypes";
+import type { ExchangeData } from "../types/ExchangeType";
 
 export async function fetchStock(symbol: string): Promise<StockData | { error: string }> {
     try {
@@ -67,4 +68,24 @@ export async function fetchStockNews(symbol: string): Promise<{ symbol: string, 
     } catch {
         return { error: "서버 요청 실패" };
     }
+}
+
+export async function fetchExchangeRates() {
+    const resp = await fetch("/api/exchange/latest")
+    if (!resp.ok) {
+        throw new Error("환율 API 오류")
+    }
+    const json = await resp.json();
+    
+    const data: ExchangeData = {
+        base: json.base,
+        rate: {
+            KRW: json.rates?.KRW,
+            EUR: json.rates?.EUR,
+            JPY: json.rates?.JPY,
+            CNY: json.rates?.CNY,
+        },
+    };
+
+    return data;
 }

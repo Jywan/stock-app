@@ -29,9 +29,10 @@ def create_app():
     update_exchange_job()
 
     # 10분 간격으로 job 실행
-    scheduler.add_job(update_exchange_job, "interval", minute=10, id="exchange_update")
+    scheduler.add_job(update_exchange_job, "interval", minutes=10, id="exchange_update")
     scheduler.start()
 
+    # 종료 시 스케쥴러도 정리
     @app.teardown_appcontext
     def shutdown_scheduler(exception=None):
         if scheduler.running:

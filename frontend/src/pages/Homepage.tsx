@@ -6,6 +6,7 @@ import StockForm from "../components/StockForm/StockForm";
 import RealtimeQuotePanel from "../components/RealtimeQuotePanel/RealtimeQuotePanel"
 import StockChartPanel from "../components/StockChartPanel/StockChartPanel"
 import StockNewsPanel from "../components/StockNewsPanel/StockNewsPanel";
+import ExchangeRatePanel from "../components/ExchangeRatePanel/ExchangeRatePanel";
 import "./Hompage.css";  
 
 function HomePage() {
@@ -125,7 +126,8 @@ function HomePage() {
                     <StockChartPanel symbol={data ? data.symbol : null} daily={daily} timeframe={timeframe} loading={loading} onChangeTimeframe={handleTimeframeChange} />
                 </section>
 
-                {/* 우측: 뉴스/리스트(추후) */}
+                {/* 우측: 환율 + 뉴스/리스트 */}
+                <ExchangeRatePanel />
                 <StockNewsPanel symbol={data? data.symbol : null} articles={news} loading={newsLoading} error={newsError} onReload={() => reloadNews()}/>
             </div>
         </div>

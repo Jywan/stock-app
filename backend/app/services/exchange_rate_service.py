@@ -12,8 +12,8 @@ class ExchangeRateService:
     def update_rates(cls):
         """외부 API 호출해서 최신 환율을 캐시에 저장"""
 
-        api_key = current_app.config.get["EXCHANGE_API_KEY"]
-        base = current_app.config.get["EXCHANGE_BASE_CURRENCY"]
+        api_key = current_app.config.get("EXCHANGE_API_KEY")
+        base = current_app.config.get("EXCHANGE_BASE_CURRENCY", "USD")
         
         if not api_key:
             raise ApiError("EXCHANGE_API_KEY 설정 필요", 500)
@@ -45,10 +45,9 @@ class ExchangeRateService:
             if code in conversion_rates
         }
 
-
         cls._latest_rates = {
             "base": data.get("base_code", base),
-            "rates": conversion_rates,
+            "rates": filtered_rate,
         }
 
         return cls._latest_rates
@@ -56,9 +55,9 @@ class ExchangeRateService:
     @classmethod
     def get_cached_rates(cls, auto_fetch: bool = True):
         """캐시된 환율 반환"""
-        if cls.get_cached_rates is None and auto_fetch:
-            # 처음 한 번은 직접 채움 (스케쥴러보다 먼저 호출될 수 있으므로..)
-            return cls.update_rates()
-        if cls.get_cached_rates is None:
+        if cls._latest_rates is None:
+            if auto_fetch:
+                return cls.update_rates()
             raise ApiError("환율 데이터가 아직 초기화되지 않았습니다.", 503)
+
         return cls._latest_rates
