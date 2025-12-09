@@ -79,7 +79,7 @@ export async function fetchExchangeRates() {
     
     const data: ExchangeData = {
         base: json.base,
-        rate: {
+        rates: {
             KRW: json.rates?.KRW,
             EUR: json.rates?.EUR,
             JPY: json.rates?.JPY,

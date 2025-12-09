@@ -30,33 +30,33 @@ function ExchangeRatePanel() {
             </div>
         )
     }
-    const { base, rate } = data;
-    
-    return (
-        <div className="panel">
-            <h2 className="panel-title">환율</h2>
-            <p className="panel-subtitle">기준통화: {base}</p>
+    const { base, rates } = data;
 
-            <div className="rate-list">
-                <div className="rate-row">
-                    <span>🇰🇷 KRW</span>
-                    <span>{rate.KRW?.toLocaleString()}</span>
-                </div>
-                <div className="rate-row">
-                    <span>🇪🇺 EUR</span>
-                    <span>{rate.EUR?.toLocaleString()}</span>
-                </div>
-                <div className="rate-row">
-                    <span>🇯🇵 JPY</span>
-                    <span>{rate.JPY?.toLocaleString()}</span>
-                </div>
-                <div className="rate-row">
-                    <span>🇨🇳 CNY</span>
-                    <span>{rate.CNY?.toLocaleString()}</span>
+    return (
+            <div className="panel">
+                <h2 className="panel-title">환율</h2>
+                <p className="panel-subtitle">기준통화: {base}</p>
+
+                <div className="rate-list">
+                    <div className="rate-row">
+                        <span>🇰🇷 KRW</span>
+                        <span>{rates.KRW?.toLocaleString()}</span>
+                    </div>
+                    <div className="rate-row">
+                        <span>🇪🇺 EUR</span>
+                        <span>{rates.EUR?.toLocaleString()}</span>
+                    </div>
+                    <div className="rate-row">
+                        <span>🇯🇵 JPY</span>
+                        <span>{rates.JPY?.toLocaleString()}</span>
+                    </div>
+                    <div className="rate-row">
+                        <span>🇨🇳 CNY</span>
+                        <span>{rates.CNY?.toLocaleString()}</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    );
-}
+        );
+    }
 
 export default ExchangeRatePanel;

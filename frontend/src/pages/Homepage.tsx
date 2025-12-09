@@ -127,8 +127,21 @@ function HomePage() {
                 </section>
 
                 {/* 우측: 환율 + 뉴스/리스트 */}
-                <ExchangeRatePanel />
-                <StockNewsPanel symbol={data? data.symbol : null} articles={news} loading={newsLoading} error={newsError} onReload={() => reloadNews()}/>
+                
+                {/* 우측: 환율 + 뉴스 */}
+                <section className="page-right">
+                    <ExchangeRatePanel />
+
+                    <div className="panel" style={{ marginTop: 16 }}>
+                        <StockNewsPanel
+                            symbol={data ? data.symbol : null}
+                            articles={news}
+                            loading={newsLoading}
+                            error={newsError}
+                            onReload={() => reloadNews()}
+                        />
+                    </div>
+                </section>
             </div>
         </div>
     );

@@ -1,9 +1,11 @@
+export interface ExchangeRates {
+    KRW?: number;
+    EUR?: number;
+    JPY?: number;
+    CNY?: number;
+}
+
 export interface ExchangeData {
     base: string;
-    rate: {
-        KRW?: number;
-        EUR?: number;
-        JPY?: number;
-        CNY?: number;
-    }
+    rates: ExchangeRates;   // <= 여기 무조건 rates
 }

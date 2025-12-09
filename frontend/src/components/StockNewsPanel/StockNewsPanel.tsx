@@ -11,11 +11,14 @@ interface Props {
 
 function StockNewsPanel({ symbol, articles, loading, error, onReload }: Props) {
     return (
-
-        <section className="page-right panel">
+        <div>
             <div className="news-header">
                 <h2 className="panel-title">관련 뉴스</h2>
-                <button className="news-refresh-btn" onClick={onReload} disabled={!symbol || loading}>
+                <button
+                    className="news-refresh-btn"
+                    onClick={onReload}
+                    disabled={!symbol || loading}
+                >
                     새로고침
                 </button>
             </div>
@@ -46,7 +49,12 @@ function StockNewsPanel({ symbol, articles, loading, error, onReload }: Props) {
                 <ul className="news-list">
                     {articles.slice(0, 10).map((a, idx) => (
                         <li key={idx} className="news-item">
-                            <a href={a.url} target="_blank" rel="noreferrer" className="news-title">
+                            <a
+                                href={a.url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="news-title"
+                            >
                                 {a.title}
                             </a>
                             <div className="news-meta">
@@ -57,24 +65,25 @@ function StockNewsPanel({ symbol, articles, loading, error, onReload }: Props) {
                                     </span>
                                 )}
                                 {a.overall_sentiment_label && (
-                                    <span className={`news-sentiment badge-${a.overall_sentiment_label.toLowerCase}`}>
+                                    <span
+                                        className={`news-sentiment badge-${a.overall_sentiment_label.toLowerCase()}`}
+                                    >
                                         {a.overall_sentiment_label}
                                     </span>
                                 )}
                             </div>
                             {a.summary && (
                                 <p className="news-summary">
-                                    {a.summary.length >120
+                                    {a.summary.length > 120
                                         ? a.summary.slice(0, 120) + "..."
-                                        : a.summary
-                                    }
+                                        : a.summary}
                                 </p>
                             )}
                         </li>
                     ))}
                 </ul>
             )}
-        </section>
+        </div>
     );
 }
 
