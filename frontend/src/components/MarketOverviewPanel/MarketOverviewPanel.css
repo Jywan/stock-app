@@ -1,0 +1,72 @@
+.market-section {
+    margin-top: 16px;
+}
+
+.market-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.market-card {
+    padding: 8px 10px;
+    border-radius: 8px;
+    background-color: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.market-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.market-name {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.market-symbol {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.market-fullname {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.market-price {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.market-sub {
+    margin-top: 4px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    font-size: 11px;
+}
+
+.market-change,
+.market-change-pct {
+    font-weight: 500;
+}
+
+.market-change.up,
+.market-change-pct.up {
+    color: #22c55e;
+}
+
+.market-change.down,
+.market-change-pct.down {
+    color: #f97373;
+}
+
+.market-change.flat,
+.market-change-pct.flat {
+    color: #e5e7eb;
+}

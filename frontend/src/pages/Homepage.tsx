@@ -7,6 +7,7 @@ import RealtimeQuotePanel from "../components/RealtimeQuotePanel/RealtimeQuotePa
 import StockChartPanel from "../components/StockChartPanel/StockChartPanel"
 import StockNewsPanel from "../components/StockNewsPanel/StockNewsPanel";
 import ExchangeRatePanel from "../components/ExchangeRatePanel/ExchangeRatePanel";
+import MarketOverviewPanel from "../components/MarketOverviewPanel/MarketOverviewPanel";
 import "./Hompage.css";  
 
 function HomePage() {
@@ -111,13 +112,7 @@ function HomePage() {
                 <section className="page-left panel">
                     <h2 className="panel-title">종목 검색</h2>
                     <StockForm onSearch={handleSearch} />
-
-                    <h3 className="panel-subtitle" style={{ marginTop: 20 }}>옵션 (추후 추가)</h3>
-                    <ul className="option-list">
-                        <li>기간 선택</li>
-                        <li>일/주/월 봉 선택</li>
-                        <li>지표 추가 (추후)</li>
-                    </ul>
+                    <MarketOverviewPanel />
                 </section>
 
                 {/* 중앙: 시세 + 차트 */}

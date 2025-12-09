@@ -1,5 +1,6 @@
 import type { StockData, DailyCandle, NewsArticle } from "../types/StockTypes";
 import type { ExchangeData } from "../types/ExchangeType";
+import type { MarketOverviewResponse } from "../types/MarketType";
 
 export async function fetchStock(symbol: string): Promise<StockData | { error: string }> {
     try {
@@ -88,4 +89,21 @@ export async function fetchExchangeRates() {
     };
 
     return data;
+}
+
+export async function fetchMarketOverview(): Promise<MarketOverviewResponse | { error: string }> {
+    
+    try {
+        const res = await fetch("/api/market/overview");
+        if (!res.ok) {
+            const body = await res.json().catch(() => null)
+            const msg = body?.error || `HTTP ${res.status}`
+            throw new Error(msg);
+        }
+
+        const data = (await res.json()) as MarketOverviewResponse;
+        return data
+    } catch (e:any) {
+        return { error: e.massage ?? "시장 요약조회 실패" }
+    }
 }
