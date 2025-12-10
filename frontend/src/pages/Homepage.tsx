@@ -120,7 +120,7 @@ function HomePage() {
                     <RealtimeQuotePanel loading={loading} error={error} data={data} />
                     <StockChartPanel symbol={data ? data.symbol : null} daily={daily} timeframe={timeframe} loading={loading} onChangeTimeframe={handleTimeframeChange} />
                 </section>
-            
+                
                 {/* 우측: 환율 + 뉴스 */}
                 <section className="page-right">
                     <ExchangeRatePanel />
